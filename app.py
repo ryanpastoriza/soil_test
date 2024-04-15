@@ -211,7 +211,7 @@ def initialize():
 	# timeout = 1
 
 	# Open serial port
-	ser = serial.Serial(serial_port, baud_rate, timeout=timeout)
+	# ser = serial.Serial(serial_port, baud_rate, timeout=timeout)
 
 	try:
 	    while True:
