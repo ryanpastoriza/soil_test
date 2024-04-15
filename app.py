@@ -195,7 +195,7 @@ def initialize():
 	ser = serial.Serial('/dev/ttyUSB0')
 	print(ser)
 
-	ser = serial.Serial('dev/ttyUSB0',
+	ser = serial.Serial('dev/ttyUSB3',
                     baudrate=9600,
 					parity=serial.PARITY_NONE,
 					stopbits=serial.STOPBITS_ONE)
