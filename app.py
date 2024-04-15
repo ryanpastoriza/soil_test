@@ -194,6 +194,13 @@ def initialize():
 	
 	ser = serial.Serial('/dev/ttyUSB0')
 	print(ser)
+
+	ser = serial.Serial('dev/ttyUSB0',
+                    baudrate=9600,
+					parity=serial.PARITY_NONE,
+					stopbits=serial.STOPBITS_ONE)
+	data = pmd.read()
+	print(byte)
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
 	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
