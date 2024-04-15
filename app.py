@@ -213,6 +213,7 @@ def initialize():
 			# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
 			Rx_Nitro = uart0.read(7)
 			print("Received data : " + str(Rx_Nitro))
+			n_value = int.from_bytes(Rx_Nitro[3:5], 'big')
 		else:
 			print("No Data")
 
