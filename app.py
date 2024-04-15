@@ -6,6 +6,7 @@ import data
 # from tkinter import *
 # import customtkinter
 import serial
+import time
 
 def selectFertilizer(deficient, fertilizer_grades):
 
