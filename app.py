@@ -195,7 +195,7 @@ def initialize():
 	
 
 	uart0 = serial.Serial(port='/dev/ttyS0', baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
-	uart0.open()
+	# uart0.open()
 
 	nitro = b'0x01,0x03, 0x00, 0x1e, 0x00, 0x01, 0xe4, 0x0c'
 	phos = b'0x01,0x03, 0x00, 0x1f, 0x00, 0x01, 0xb5, 0xcc'
