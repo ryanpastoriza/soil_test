@@ -218,6 +218,20 @@ def initialize():
 		else:
 			print("No Data")
 
+		if uart0.write(phos):
+			Tx_Phos = uart0.write(nitro)
+			print("Sent Data : " + str(Tx_Phos))
+			Tx_Phos = uart0.readline()
+			print("Received data : " + str(Tx_Phos))
+			print(Tx_Phos)
+			# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
+			Tx_Phos = uart0.read(7)
+			print("Received data : " + str(Tx_Phos))
+			p_value = int.from_bytes(Tx_Phos[3:5], 'big')
+			print(p_value)
+		else:
+			print("No Data")
+
 		
 	# if uart0.write(nitro):
 	# 	Rx_Nitro = uart0.read(7)
