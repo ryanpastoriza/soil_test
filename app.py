@@ -194,8 +194,10 @@ def initialize():
 	
 	
 
-	uart0 = serial.Serial(port='/dev/ttyS0', baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
+	uart0 = serial.Serial(port='/dev/ttyUSB3', baudrate = 4800, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
 	# uart0.open()
+
+	print(uart0)
 	nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
 
 	moistRead = uart0.readline().decode().rstrip()
@@ -208,7 +210,7 @@ def initialize():
 			print("Received data : " + str(Rx_Nitro))
 		else:
 			print("No Data")
-	
+
 		print(uart0.read(1))
 		print(uart0.read(2))
 		print(uart0.read(3))
