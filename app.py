@@ -140,6 +140,14 @@ def fertilizerRecommendation():
 	print("Adjusted Combination Nutrient Content:", adjusted_content)
 	print("Adjusted Combination Total Deficit:", adjusted_deficit)
 
+
+# Function to read NPK data from the sensor
+def read_npk_data():
+    ser.write(b'ReadNPK\r\n')  # Send command to read NPK data
+    time.sleep(0.1)  # Wait for response
+    response = ser.readline().strip()  # Read response from sensor
+    return response
+
 # Recommendations are expressed in Kilograms per acre (kg/acre)
 def initialize():
 
@@ -194,43 +202,60 @@ def initialize():
 	
 	
 
-	uart0 = serial.Serial(port='/dev/ttyUSB0', baudrate = 4800, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
+	ser = serial.Serial(port='/dev/ttyUSB0', baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
 	# uart0.open()
 
+	# Define serial port settings
+	# serial_port = '/dev/ttyUSB0'  # Change this to the appropriate serial port
+	# baud_rate = 9600
+	# timeout = 1
+
+	# Open serial port
+	ser = serial.Serial(serial_port, baud_rate, timeout=timeout)
+
+	try:
+	    while True:
+	        npk_data = read_npk_data()
+	        print("NPK Data:", npk_data.decode('utf-8'))  # Assuming data is in UTF-8 format
+	        time.sleep(1)  # Adjust the interval based on your requirements
+	except KeyboardInterrupt:
+	    print("Exiting...")
+	    ser.close()
+
 	
 	
-	while True:
-		nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
-		phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
-		pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
+	# while True:
+	# 	nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
+	# 	phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
+	# 	pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
 
-		if uart0.write(nitro):
-			Tx_Nitro = uart0.write(nitro)
-			print("Sent Data : " + str(Tx_Nitro))
-			Rx_Nitro = uart0.readline()
-			print("Received data : " + str(Rx_Nitro))
-			print(Rx_Nitro)
-			# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
-			Rx_Nitro = uart0.read(7)
-			print("Received data : " + str(Rx_Nitro))
-			n_value = int.from_bytes(Rx_Nitro[3:5], 'big')
-			print(n_value)
-		else:
-			print("No Data")
+	# 	if uart0.write(nitro):
+	# 		Tx_Nitro = uart0.write(nitro)
+	# 		print("Sent Data : " + str(Tx_Nitro))
+	# 		Rx_Nitro = uart0.readline()
+	# 		print("Received data : " + str(Rx_Nitro))
+	# 		print(Rx_Nitro)
+	# 		# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
+	# 		Rx_Nitro = uart0.read(7)
+	# 		print("Received data : " + str(Rx_Nitro))
+	# 		n_value = int.from_bytes(Rx_Nitro[3:5], 'big')
+	# 		print(n_value)
+	# 	else:
+	# 		print("No Data")
 
-		if uart0.write(phos):
-			Tx_Phos = uart0.write(phos)
-			print("Sent Data : " + str(Tx_Phos))
-			Tx_Phos = uart0.readline()
-			print("Received data : " + str(Tx_Phos))
-			print(Tx_Phos)
-			# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
-			Tx_Phos = uart0.read(7)
-			print("Received data : " + str(Tx_Phos))
-			p_value = int.from_bytes(Tx_Phos[3:5], 'big')
-			print(p_value)
-		else:
-			print("No Data")
+	# 	if uart0.write(phos):
+	# 		Tx_Phos = uart0.write(phos)
+	# 		print("Sent Data : " + str(Tx_Phos))
+	# 		Tx_Phos = uart0.readline()
+	# 		print("Received data : " + str(Tx_Phos))
+	# 		print(Tx_Phos)
+	# 		# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
+	# 		Tx_Phos = uart0.read(7)
+	# 		print("Received data : " + str(Tx_Phos))
+	# 		p_value = int.from_bytes(Tx_Phos[3:5], 'big')
+	# 		print(p_value)
+	# 	else:
+	# 		print("No Data")
 
 		
 	# if uart0.write(nitro):
