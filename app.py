@@ -197,19 +197,16 @@ def initialize():
 	uart0 = serial.Serial(port='/dev/ttyS0', baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
 	# uart0.open()
 
-	nitro = b'0x01,0x03, 0x00, 0x1e, 0x00, 0x01, 0xe4, 0x0c'
-	phos = b'0x01,0x03, 0x00, 0x1f, 0x00, 0x01, 0xb5, 0xcc'
-	pota = b'0x01,0x03, 0x00, 0x20, 0x00, 0x01, 0x85, 0xc0'
+	
+	nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
+	phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
+	pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
 
-	if (uart0.write(phos)):
-		Tx_Phos = uart0.write(phos)
-		print("Sent Data : " + str(Tx_Phos))
-		Rx_Phos = uart0.readline()
-		print("Received data : " + str(Rx_Phos))
-		Phosphorus_Value = ((int.from_bytes(Rx_Phos[3], 'big')) << 8) + (int.from_bytes(Rx_Phos[4], 'big'))
-		return Phosphorus_Value
+	if uart0.write(nitro):
+		Rx_Nitro = uart0.read(7)
+		print("Received data : " + str(Rx_Nitro))
 	else:
-		print("Data Didn't Transmit")
+		print("No Data")
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
 	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
