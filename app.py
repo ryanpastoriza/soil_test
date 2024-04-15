@@ -198,7 +198,7 @@ def initialize():
 	# uart0.open()
 
 	moistRead = uart0.readline().decode().rstrip()
-	nitrogen = ser.readline().decode('utf-8').rstrip()
+	nitrogen = uart0.readline().decode('utf-8').rstrip()
 	print(moistRead)
 	print(nitrogen)
 	# nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
