@@ -12,7 +12,6 @@ uart0 = serial.Serial(
 	timeout=1
 )
 
-uart0
 
 nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
 phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
