@@ -142,7 +142,7 @@ def fertilizerRecommendation():
 
 
 # Function to read NPK data from the sensor
-def read_npk_data():
+def read_npk_data(ser):
     ser.write(b'ReadNPK\r\n')  # Send command to read NPK data
     time.sleep(0.1)  # Wait for response
     response = ser.readline().strip()  # Read response from sensor
@@ -215,7 +215,7 @@ def initialize():
 
 	try:
 	    while True:
-	        npk_data = read_npk_data()
+	        npk_data = read_npk_data(ser)
 	        print("NPK Data:", npk_data.decode('utf-8'))  # Assuming data is in UTF-8 format
 	        time.sleep(1)  # Adjust the interval based on your requirements
 	except KeyboardInterrupt:
