@@ -5,7 +5,7 @@ import serial
 #NPK Sensor set up
 uart0 = serial.Serial(
 	port='/dev/ttyUSB1',
-	baudrate=4600,
+	baudrate=4800,
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS,
@@ -17,7 +17,13 @@ phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
 pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
 
 if uart0.write(nitro):
+	Tx_Nitro = uart0.write(nitro)
+	print("Sent Data : " + str(Tx_Nitro))
+	Rx_Nitro = uart0.readline()
+	print("Received data : " + str(Rx_Nitro))
+	Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
 	Rx_Nitro = uart0.read(7)
+	print("Received data : " + str(Rx_Nitro))
 else:
 	print("No Data")
 
