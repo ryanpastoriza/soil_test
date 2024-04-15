@@ -205,12 +205,12 @@ def initialize():
 		pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
 
 		if uart0.write(nitro):
-			print(uart0)
 			Tx_Nitro = uart0.write(nitro)
 			print("Sent Data : " + str(Tx_Nitro))
 			Rx_Nitro = uart0.readline()
 			print("Received data : " + str(Rx_Nitro))
-			Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
+			print(Rx_Nitro)
+			# Nitrogen_Value = ((int.from_bytes(Rx_Nitro[3], 'big')) << 8) + (int.from_bytes(Rx_Nitro[4], 'big'))
 			Rx_Nitro = uart0.read(7)
 			print("Received data : " + str(Rx_Nitro))
 		else:
