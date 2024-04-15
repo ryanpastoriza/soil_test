@@ -201,6 +201,7 @@ def initialize():
 	nitrogen = uart0.readline().decode('utf-8').rstrip()
 	
 	while True:
+		print(uart0)
 		moistRead = uart0.readline().decode().rstrip()
 		nitrogen = uart0.readline().decode('utf-8').rstrip()
 		print(moistRead)
