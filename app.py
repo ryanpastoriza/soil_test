@@ -197,16 +197,17 @@ def initialize():
 	uart0 = serial.Serial(port='/dev/ttyS0', baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
 	# uart0.open()
 
-	
-	nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
-	phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
-	pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
+	moistRead = uart0.readline().decode().rstrip()
+	print(moistRead)
+	# nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
+	# phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
+	# pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
 
-	if uart0.write(nitro):
-		Rx_Nitro = uart0.read(7)
-		print("Received data : " + str(Rx_Nitro))
-	else:
-		print("No Data")
+	# if uart0.write(nitro):
+	# 	Rx_Nitro = uart0.read(7)
+	# 	print("Received data : " + str(Rx_Nitro))
+	# else:
+	# 	print("No Data")
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
 	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
