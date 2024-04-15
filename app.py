@@ -86,8 +86,6 @@ def generateCombination():
 
 	    # Calculate the difference from the recommended levels
 	    difference = sum(abs(total_content[nutrient] - data.crop['Rice']['requirement'][nutrient]) for nutrient in data.crop['Rice']['requirement'])
-	    print('difference')
-	    print(difference)
 	    # Update the best combination if the difference is smaller
 	    if difference < best_difference:
 	        best_combination = combination
