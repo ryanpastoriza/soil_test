@@ -214,6 +214,7 @@ def initialize():
 			Rx_Nitro = uart0.read(7)
 			print("Received data : " + str(Rx_Nitro))
 			n_value = int.from_bytes(Rx_Nitro[3:5], 'big')
+			print(n_value)
 		else:
 			print("No Data")
 
