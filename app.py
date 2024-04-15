@@ -1,10 +1,10 @@
-import database
+# import database
 # import soiltest
 import helper
 import data
-from itertools import combinations
-from tkinter import *
-import customtkinter
+# from itertools import combinations
+# from tkinter import *
+# import customtkinter
 import serial
 
 def selectFertilizer(deficient, fertilizer_grades):
