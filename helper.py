@@ -19,7 +19,7 @@ def deficiency(actual, desired, area):
 		converted = toKilogramPerHectare(toKilogram(value), area)
 		# Compute deficiency actual - desired
 		deficient = desired[nutrient] - converted
-		required.update({ nutrient : round(deficient, 4) })
+		required.update({ nutrient : round(deficient, 2) })
 	
 	return required;
 
@@ -34,73 +34,38 @@ def toKilogram(milligram):
 def toKilogramPerHectare(kilogram, area):
 	return (kilogram * area)
 
-def getScore():
-	# Define recommended nutrient levels (example values)
-	recommended_levels = {
-	    'N': 80,  # Recommended nitrogen level in kg/ha
-	    'P': 20,  # Recommended phosphorus level in kg/ha
-	    'K': 50,  # Recommended potassium level in kg/ha
+def fertilizerRecommendation(recommended_levels, fertilizer_grades):
 
-	}
+	nutrient_amounts_per_grade = {grade: {nutrient: 0 for nutrient in recommended_levels} for grade in fertilizer_grades}
+	total_kg_per_grade = {grade: 0 for grade in fertilizer_grades}
 
-	# Define actual nutrient levels supplied (example values)
-	supplied_levels = {
-	    'N': 70,  # Supplied nitrogen level in kg/ha
-	    'P': 25,  # Supplied phosphorus level in kg/ha
-	    'K': 40,  # Supplied potassium level in kg/ha
+		# Step 1: Calculate amounts from each fertilizer grade
+	for grade, percentages in fertilizer_grades.items():
+	    for nutrient in recommended_levels:
+	        amount_needed = max(0, recommended_levels[nutrient] - nutrient_amounts_per_grade[grade][nutrient])
+	        nutrient_amounts_per_grade[grade][nutrient] += min(amount_needed, (percentages[nutrient] / 100) * sum(recommended_levels.values()))
+	    # Calculate total kg/ha for the current fertilizer grade
+	    total_kg_per_grade[grade] = sum(nutrient_amounts_per_grade[grade].values())
 
-	}
+	# Output the total kg/ha for each fertilizer grade and the resulting nutrient amounts
+	print("Total kg/ha for Each Fertilizer Grade:")
+	for grade, total_kg in total_kg_per_grade.items():
+	    print(f"{grade}: {total_kg} kg/ha")
+	    print("Nutrient Amounts (kg/ha):")
+	    for nutrient, amount in nutrient_amounts_per_grade[grade].items():
+	        print(f"  {nutrient}: {amount}")
 
-	# Define deduction rules
-	deductions = {
-	    'N': 5,   # Deduct 5 points if N is outside 10% of recommended level
-	    'P': 2,   # Deduct 2 points if P is too high
-	    'K': 3,   # Deduct 3 points if K is too low
-	}
+	deficit = calculateDeficit(recommended_levels, fertilizer_grades, nutrient_amounts_per_grade)
 
-	# Calculate deductions for each nutrient
-	total_deductions = 0
-	for nutrient, recommended_level in recommended_levels.items():
-	    supplied_level = supplied_levels.get(nutrient, 0)  # Get supplied level for the nutrient
-	    if nutrient == 'N':
-	        if supplied_level < 0.9 * recommended_level or supplied_level > 1.1 * recommended_level:
-	            total_deductions += deductions[nutrient]
-	    elif nutrient == 'P':
-	        if supplied_level > recommended_level:
-	            total_deductions += deductions[nutrient]
-	    elif nutrient in ['K']:
-	        if supplied_level < recommended_level:
-	            total_deductions += deductions[nutrient]
+	print(deficit)
 
-	# Calculate final score
-	perfect_score = 100
-	final_score = max(perfect_score - total_deductions, 0)
+def calculateDeficit(recommended_levels, fertilizer_grades, nutrient_amounts_per_grade):
 
-	
-	print(total_deductions)
-	print(f"Final Score: {final_score}")
+	deficiency = {};
+	print("\nDeficit for Each Nutrient:")
+	for nutrient in recommended_levels:
+	    deficit = recommended_levels[nutrient] - sum(nutrient_amounts_per_grade[grade][nutrient] for grade in fertilizer_grades)
+	    deficiency.update({ nutrient: deficit })
+	    print(f"{nutrient}: {deficit} kg/ha")
 
-# def lowest(data):
-
-# 	lowest = float('inf')
-# 	key = None
-# 	for k, v  in data.items():
-# 		val = toKilogram(v)
-# 		if v < lowest:
-# 			lowest = val
-# 			key = k
-
-# 	return lowest
-
-# def findRatio(data):
-
-# 	low = lowest(data)
-# 	ratio = {}
-
-# 	for k, v  in data.items():
-
-# 		result = (toKilogram(v)/low)
-# 		ratio.update({ k : round(result) })
-
-# 	print(ratio)
-
+	return deficiency

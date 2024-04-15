@@ -3,32 +3,8 @@ import soiltest
 import helper
 import data
 from itertools import combinations
-
-# def dbInit():
-# 		connection = database.connect()
-# 		database.create_tables(connection)
-# 		database.add_fertilizer(connection, "Urea", "46-0-0", 46, 0, 0)
-# 		database.add_fertilizer(connection, "Triple 14 Complete Fertilizer", "14-14-14", 14, 14, 14)
-# 		database.add_fertilizer(connection, "Ammonium Sulfate", "21-0-0", 21, 0, 0)
-# 		database.add_fertilizer(connection, "Single Superphosphate", "0-18-0", 0, 18, 0)
-# 		database.add_fertilizer(connection, "Potassium chloride ", "0-0-60", 0, 0, 60)
-# 		database.add_crop(connection, "rice", 90, 20, 40, "kg/ha")
-
-# def getCrop(name):
-# 		connection = database.connect()
-# 		crop = database.get_crop_by_name(connection, name)
-
-# 		return {
-# 			"n" : crop[2],
-# 			"p" : crop[3],
-# 			"k" : crop[4]
-# 		}
-
-# def getFertilizers():
-# 		connection = database.connect()
-# 		fertilizers = database.get_fertilizers(connection)
-
-# 		return fertilizers
+from tkinter import *
+import customtkinter
 
 def selectFertilizer(deficient, fertilizer_grades):
 
@@ -42,15 +18,14 @@ def selectFertilizer(deficient, fertilizer_grades):
 				# print(f"{value} - {value / (nutrient_content[key]/100)}")
 				score += value / (nutrient_content[key]/100)
 
-		print('Score')
-		print(grade)
-		print(score)
+		# print('Score')
+		# print(grade)
+		# print(score)
 		if( score < best_score ):
 			best_grade = grade
 			best_score = score
 
 	return best_grade
-
 # Function to calculate nutrient content for a given combination of fertilizer grades
 def calculate_nutrient_content(combination):
     total_content = {'N': 0, 'P': 0, 'K': 0}
@@ -58,14 +33,12 @@ def calculate_nutrient_content(combination):
         for nutrient in total_content:
             total_content[nutrient] += data.fertilizer_grades[grade].get(nutrient, 0)
     return total_content
-
 # Function to evaluate the effectiveness of a combination
 def evaluate_combination(combination):
     content = calculate_nutrient_content(combination)
     deficit = {nutrient: max(0, data.crop['Rice']['requirement'][nutrient] - content.get(nutrient, 0)) for nutrient in data.crop['Rice']['requirement']}
     total_deficit = sum(deficit.values())
     return total_deficit, content
-
 
 def generateCombination():
 
@@ -166,19 +139,16 @@ def fertilizerRecommendation():
 	print("Adjusted Combination Nutrient Content:", adjusted_content)
 	print("Adjusted Combination Total Deficit:", adjusted_deficit)
 
-	# Explore alternative combinations
-	# alternative_combinations = adjusted_combination
-	# Generate and evaluate alternative combinations
-	# for combination in alternative_combinations:
-	#     total_deficit, content = evaluate_combination(combination)
-    # Compare with the adjusted combination or other combinations
-    # Choose the combination that minimizes the deficit or meets the requirements satisfactorily
-
-
 # Recommendations are expressed in Kilograms per acre (kg/acre)
 def initialize():
-	# dbInit()
 
+	# customtkinter.set_appearance_mode("dark")
+	# customtkinter.set_default_color_theme("dark-blue")
+
+	# root = customtkinter.CTk()
+	# root.title("Soil Test App")
+	# root.geometry('400x400')
+	# root.mainloop()
 	# 50 kg = 1 bag
 	bag = 50
 
@@ -202,7 +172,7 @@ def initialize():
 	# Determine Desired Nutrient Level
 	# get ideal NPK value for crop x
 	print("Desired Nutrient Level in kg/ha")
-	print(f"{data.crop['Rice']['requirement']}")
+	print(f"{data.crop['Rice']['requirement']} in {data.crop['Rice']['unit']} ")
 	print()
 
 	
@@ -213,16 +183,51 @@ def initialize():
 	print(f"{deficient}")
 	print()
 
+	
+	# all_combinations = []
+	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
+	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
 
-	first_grade = selectFertilizer(deficient, data.fertilizer_grades)
 
+	# for combintion in all_combinations:
+	# 	print(combintion)
+	# 	print()
+
+	# helper.fertilizerRecommendation(deficient, data.fertilizer_grades)
+	soiltest.nitrogen()
+
+	# all_combinations = []
+	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
+	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
+
+
+	# for combination in all_combinations:
+
+	# Calculate the needed kg/ha for each fertilizer grade in the selected combination
+	# needed_kg_per_grade = {}
+	# for grade, proportion in proportions.items():
+	#     needed_kg_per_grade[grade] = {nutrient: round(proportion * recommended_levels[nutrient], 2) for nutrient in recommended_levels}
+
+	# # Output the needed kg/ha for each fertilizer grade
+	# print("\nNeeded kg/ha for Each Fertilizer Grade:")
+	# for grade, nutrient_levels in needed_kg_per_grade.items():
+	#     print(f"{grade}:")
+	#     for nutrient, level in nutrient_levels.items():
+	#         print(f"  {nutrient}: {level} kg/ha")
+
+	# print(len(all_combinations))
+
+	# first_grade = selectFertilizer(deficient, data.fertilizer_grades)
+	# print(first_grade)
 	# Check if the first fertilizer grade is sufficient
-	is_enough = all(data.fertilizer_grades[first_grade][nutrient] >= deficient[nutrient] 
-                for nutrient in deficient)
+	# is_enough = all(data.fertilizer_grades[first_grade][nutrient] >= deficient[nutrient] 
+ #                for nutrient in deficient)
 
 	# print(is_enough)
 
 	# second_grade =  selectFertilizer(deficient, data.fertilizer_grades)
+
+	# print(second_grade)
 
 	# more = {}
 	# for key, value in deficient.items():
@@ -234,37 +239,7 @@ def initialize():
 
 	# helper.getScore()
 
-	fertilizerRecommendation()
+	# fertilizerRecommendation()
 
 
 initialize()
-# Fertilizer recommendations given in kg/ha.
-# Conduct Sensor Reading
-	# Retrieve NPK Value
-		# N (X kg/ha)
-		# P (X kg/ha)
-		# K (X kg/ha)
-
-# Interpret fertilizer recommendation
-
-# Compare nutrient level to crop requirement
-	
-
-		
-	# Compute for the Deficiency
-		# Deficiency = Recommended N Level - Measured N Level
-
-# Interpret fertilizer recommendation
-	# 
-
-
-# Amount of Required Nutrient
- 	# N (90 to 120 kg/ha)
-	# P (20 to 40 kg/ha)
-	# K (40 to 80 kg/ha)
-
-
-# Convert Actual Nutrient Level from mg/kg to kg/ha
-# Determine Desired Nutrient Level
-# Compute Deficiency:
-# Adjust for Area:

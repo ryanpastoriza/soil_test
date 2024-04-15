@@ -1,33 +1,39 @@
-# import RPi.GPIO as GPIO
-# import serial
+# from machine import 
+import RPi.GPIO as GPIO
+import serial
 
 #NPK Sensor set up
-# uart0 = serial.Serial(
-# 	port='/dev/ttyUSB1', 
-# 	baudrate=4600, 
-# 	parity=serial.PARITY_NONE, 
-# 	stopbits=serial.STOPBITS_ONE, 
-# 	bytesize=serial.EIGHTBITS, 
-# 	timeout=1
-# )
+uart0 = serial.Serial(
+	port='/dev/ttyUSB1',
+	baudrate=4600,
+	parity=serial.PARITY_NONE,
+	stopbits=serial.STOPBITS_ONE,
+	bytesize=serial.EIGHTBITS,
+	timeout=1
+)
 
-# nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
-# phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
-# pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
+nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
+phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
+pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
+
+if uart0.write(nitro):
+	Rx_Nitro = uart0.read(7)
+else:
+	print("No Data")
 
 # Sensor response is in mg/kg
-def nitrogen():
-	n = 53
-	return n
-	# convert value into kg/ha
+# def nitrogen():
 
+	# n = 53
+	# return n
+	# convert value into kg/ha
 	# if uart0.write(nitro):
- #        Rx_Nitro = uart0.read(7)
- #        print("Received data : " + str(Rx_Nitro))
- #        Nitrogen_Value = int.from_bytes(Rx_Nitro[3:5], 'big')
- #        return Nitrogen_Value
+	# 	Rx_Nitro = uart0.read(7)
+ #        # print("Received data : " + str(Rx_Nitro))
+ #        # Nitrogen_Value = int.from_bytes(Rx_Nitro[3:5], 'big')
+ #        # return Nitrogen_Value
  #    else:
- #        print("Data Didn't Transmit")
+ #    	print("Data Didn't Transmit")
 
 def phosphorus():
 	p = 120
