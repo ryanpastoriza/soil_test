@@ -1,10 +1,11 @@
 import database
-import soiltest
+# import soiltest
 import helper
 import data
 from itertools import combinations
 from tkinter import *
 import customtkinter
+import serial
 
 def selectFertilizer(deficient, fertilizer_grades):
 
@@ -157,11 +158,18 @@ def initialize():
 
 	# get NPK value from sensor
 	# Convert Actual Nutrient Level from mg/kg to kg/ha
+	# actual = {
+	# 	'N': soiltest.nitrogen(),
+	# 	'P' : soiltest.phosphorus(),
+	# 	'K' : soiltest.potassium(),
+	# }
+
 	actual = {
-		'N': soiltest.nitrogen(),
-		'P' : soiltest.phosphorus(),
-		'K' : soiltest.potassium(),
+		'N': 53,
+		'P' : 40,
+		'K' : 20,
 	}
+
 
 	# helper.findRatio(actual)
 
@@ -184,6 +192,8 @@ def initialize():
 	print()
 
 	
+	ser = serial.Serial('/dev/ttyUSB0')
+	print(ser)
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
 	#     all_combinations.extend(combinations(data.fertilizer_grades.keys(), r))
@@ -194,7 +204,9 @@ def initialize():
 	# 	print()
 
 	# helper.fertilizerRecommendation(deficient, data.fertilizer_grades)
-	soiltest.nitrogen()
+	# soiltest.nitrogen()
+
+
 
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
