@@ -219,7 +219,7 @@ def initialize():
 			print("No Data")
 
 		if uart0.write(phos):
-			Tx_Phos = uart0.write(nitro)
+			Tx_Phos = uart0.write(nitrphoso)
 			print("Sent Data : " + str(Tx_Phos))
 			Tx_Phos = uart0.readline()
 			print("Received data : " + str(Tx_Phos))
