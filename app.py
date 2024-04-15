@@ -199,7 +199,7 @@ def initialize():
                     baudrate=9600,
 					parity=serial.PARITY_NONE,
 					stopbits=serial.STOPBITS_ONE)
-	data = pmd.read()
+	sensor_data = pmd.read()
 	print(byte)
 	# all_combinations = []
 	# for r in range(1, min(4, len(data.fertilizer_grades) + 1)):
