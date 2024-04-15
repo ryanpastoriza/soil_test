@@ -199,8 +199,12 @@ def initialize():
 
 	moistRead = uart0.readline().decode().rstrip()
 	nitrogen = uart0.readline().decode('utf-8').rstrip()
-	print(moistRead)
-	print(nitrogen)
+	
+	while True:
+		moistRead = uart0.readline().decode().rstrip()
+		nitrogen = uart0.readline().decode('utf-8').rstrip()
+		print(moistRead)
+		print(nitrogen)
 	# nitro = bytes.fromhex('01 03 00 1e 00 01 e4 0c')
 	# phos = bytes.fromhex('01 03 00 1f 00 01 b5 cc')
 	# pota = bytes.fromhex('01 03 00 20 00 01 85 c0')
